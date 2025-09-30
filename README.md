@@ -20,3 +20,50 @@ dotnet run --project StockService
 dotnet run --project SalesService
 dotnet run --project ApiGateway
 ```
+
+
+Estrutura do Projeto
+
+ecommerce-microservices/
+│
+├── ApiGateway/                # API Gateway (redireciona para microserviços)
+│   ├── Program.cs
+│   ├── appsettings.json
+│   └── Startup.cs (se necessário)
+│
+├── EstoqueService/          # Microserviço de Estoque
+│   ├── Controllers/
+│   │   └── ProductsController.cs
+│   ├── Models/
+│   │   └── Produto.cs
+│   ├── Data/
+│   │   └── EstoqueDbContext.cs
+│   ├── Services/
+│   │   └── EstoqueService.cs
+│   ├── Program.cs
+│   └── appsettings.json
+│
+├── VendaService/          # Microserviço de Vendas
+│   ├── Controllers/
+│   │   └── VendaController.cs
+│   ├── Models/
+│   │   └── Venda.cs
+│   ├── Data/
+│   │   └── VendaDbContext.cs
+│   ├── Services/
+│   │   └── VendaService.cs
+│   ├── Program.cs
+│   └── appsettings.json
+│
+├── common/                     # Código compartilhado entre microserviços
+│   ├── DTOs/
+│   │   ├── ProdutoDto.cs
+│   │   └── VendaDto.cs
+│   ├── Messaging/
+│   │   └── RabbitMQPublisher.cs
+│   └── Security/
+│       └── JwtHandler.cs
+│
+├── docker-compose.yml           # Para rodar PostgreSQL + RabbitMQ + serviços
+├── README.md
+└── .gitignore
