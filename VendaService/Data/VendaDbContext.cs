@@ -1,9 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using SalesService.Models;
+using VendaService.Models;
 
 namespace VendaService.Data;
 
-public class VendaDbContext(DbContextOptions<VendaDbContext> options) : DbContext(options), DbContext
+public class VendaDbContext : DbContext
 {
-  public DbSet<Order> Orders { get; set; }
+  public VendaDbContext(DbContextOptions<VendaDbContext> options) : base(options)
+  {
+  }
+
+  public DbSet<Venda> Vendas { get; set; }
 }

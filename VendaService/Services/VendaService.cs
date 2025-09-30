@@ -1,7 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using VendaService.Data;
+using VendaService.Models;
 
 namespace VendaService.Services
 {
@@ -15,39 +14,39 @@ namespace VendaService.Services
         }   
 
         //criar pedido de venda
-        public async Task<Pedido> CriarVenda(Pedido pedido)
+        public async Task<Venda> CriarVenda(Venda venda)
         {
-            if (pedido.quantidade <= 0)
+            if (venda.Quantidade <= 0)
             {
-                throw new ArgumentNullException(nameof(pedido));
+                throw new ArgumentNullException(nameof(venda));
             }
 
-            _context.Pedidos.Add(pedido);
+            _context.Vendas.Add(venda);
             await _context.SaveChangesAsync();
-            return pedido;
+            return venda;
         }
 
         //obter todos os pedidos de venda
-        public async Task<List<Pedido>> ObterTodosPedidos() =>
-            await _context.Pedidos.ToListAsync();
+        public async Task<List<Venda>> ObterTodosPedidos() =>
+            await _context.Vendas.ToListAsync();
 
         //obter pedido por ID
-        public async Task<Pedido> ObterPedidoPorId(int id) =>
-            await _context.Pedidos.FindAsync(id);
+        public async Task<Venda> ObterPedidoPorId(int id) =>
+            await _context.Vendas.FindAsync(id);
 
         //atualizar pedido de venda
-        public async Task<Pedido> AtualizarPedido(int id, Pedido pedido)
+        public async Task<Venda> AtualizarPedido(int id, Venda venda)
         {
-            var pedidoExistente = await _context.Pedidos.FindAsync(id);
-            if (pedidoExistente == null)
+            var vendaExistente = await _context.Vendas.FindAsync(id);
+            if (vendaExistente == null)
             {
-                throw new KeyNotFoundException("Pedido não encontrado");
+                throw new KeyNotFoundException("Venda não encontrada");
             }
-            pedidoExistente.Produto = pedido.Produto;
-            pedidoExistente.Quantidade = pedido.Quantidade;
-            pedidoExistente.Preco = pedido.Preco;
+            vendaExistente.Id = venda.Id;
+            vendaExistente.Quantidade = venda.Quantidade;
+            vendaExistente.Preco = venda.Preco;
             await _context.SaveChangesAsync();
-            return pedidoExistente;
+            return vendaExistente;
         }
     }
 }

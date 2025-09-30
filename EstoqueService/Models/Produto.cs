@@ -1,6 +1,6 @@
 namespace EstoqueService.Models;
 
-public class Product
+public class Produto
 {
     public int Id { get; set; }
     public string Nome { get; set; } = string.Empty;

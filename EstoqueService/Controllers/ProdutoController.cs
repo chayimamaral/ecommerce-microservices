@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using StockService.Data;
-using StockService.Models;
+using Microsoft.EntityFrameworkCore;
+using EstoqueService.Data;
+using EstoqueService.Models;
 
 namespace EstoqueService.Controllers;
 
@@ -8,32 +9,32 @@ namespace EstoqueService.Controllers;
 [Route("api/[controller]")]
 public class ProductsController : ControllerBase
 {
-    private readonly StockDbContext _context;
+    private readonly EstoqueDbContext _context;
 
-    public ProductsController(StockDbContext context)
+    public ProductsController(EstoqueDbContext context)
     {
         _context = context;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetProducts() =>
-        Ok(await _context.Products.ToListAsync());
+        Ok(await _context.Produtos.ToListAsync());
 
     [HttpPost]
-    public async Task<IActionResult> CreateProduct(Product product)
+    public async Task<IActionResult> CreateProduct(Produto product)
     {
-        _context.Products.Add(product);
+        _context.Produtos.Add(product);
         await _context.SaveChangesAsync();
         return CreatedAtAction(nameof(GetProducts), new { id = product.Id }, product);
     }
 
     [HttpPut("{id}/quantity")]
-    public async Task<IActionResult> UpdateQuantity(int id, [FromBody] int quantity)
+    public async Task<IActionResult> UpdateQuantity(int id, [FromBody] int quantidade)
     {
-        var product = await _context.Products.FindAsync(id);
+        var product = await _context.Produtos.FindAsync(id);
         if (product == null) return NotFound();
 
-        product.Quantity = quantity;
+        product.Quantidade = quantidade;
         await _context.SaveChangesAsync();
         return NoContent();
     }
