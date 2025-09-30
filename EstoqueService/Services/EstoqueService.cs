@@ -45,6 +45,5 @@ namespace EstoqueService.Services
             await _context.SaveChangesAsync();
             return existingProduct;
         }
-    }
-    
+    }    
 }
